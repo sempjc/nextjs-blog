@@ -4,23 +4,23 @@ import { getSortedPostsData } from '../lib/posts';
 import Date from '../components/date';
 import utilStyles from '../styles/utils.module.css';
 import Link from 'next/link';
+import { GetStaticProps } from 'next';
 
-export async function getStaticProps() {
-  const allPostsData = getSortedPostsData();
-  return {
-    props: {
-      allPostsData,
-    },
-  };
-}
-
-export default function Home({ allPostsData }) {
+export default function Home({
+  allPostsData
+}: {
+  allPostsData: {
+    date: string
+    title: string
+    id: string
+  }[]
+}) {
   return <>
-  <Layout home>
-    <Head>
-      <title>{siteTitle}</title>
-    </Head>
-    <section className={utilStyles.headingMd}>
+    <Layout home>
+      <Head>
+        <title>{siteTitle}</title>
+      </Head>
+      <section className={utilStyles.headingMd}>
         <p>
           Hi I'm Jean Carlo Semprit Rodriguez a passionate Software Engineer
         </p>
@@ -28,8 +28,8 @@ export default function Home({ allPostsData }) {
           (This is a sample website - you'll be building a stie like this on {' '}
           <a href='https://nextjs.org/learn'>out Next.js tutorial</a>.)
         </p>
-    </section>
-    <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
+      </section>
+      <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
         <h2 className={utilStyles.headingLg}>Blog</h2>
         <ul className={utilStyles.list}>
           {allPostsData.map(({ id, date, title }) => (
@@ -39,12 +39,21 @@ export default function Home({ allPostsData }) {
               </Link>
               <br />
               <small className={utilStyles.lightText}>
-                <Date dateString={date}/>
+                <Date dateString={date} />
               </small>
             </li>
           ))}
         </ul>
       </section>
-  </Layout>
+    </Layout>
   </>
+}
+
+export const getStaticProps: GetStaticProps = async () => {
+  const allPostsData = getSortedPostsData();
+  return {
+    props: {
+      allPostsData,
+    },
+  };
 }

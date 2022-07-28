@@ -3,11 +3,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 import styles from './layout.module.css';
 import utilStyles from '../styles/utils.module.css';
+import React from 'react';
 
 const name = "Jean Carlo Semprit Rodriguez";
 export const siteTitle = 'Next.js Sample Website';
 
-export default function ({ children, home }) {
+export default function ({ 
+    children, home } : 
+    {children: React.ReactNode, home?: boolean}) {
     return <>
         <div className={styles.container}>
             <Head>
